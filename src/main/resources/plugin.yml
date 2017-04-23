@@ -1,0 +1,3 @@
+name: KInventories
+version: @version@
+main: com.redrield.kinventories.KInventories

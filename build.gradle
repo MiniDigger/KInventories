@@ -1,0 +1,55 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.1"
+    id "com.github.johnrengelman.shadow" version "1.2.4"
+}
+
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url = "http://dl.bintray.com/redrield/maven"
+    }
+}
+
+configurations {
+    shade
+
+    compile.extendsFrom shade
+    compile.extendsFrom kapt
+}
+
+shadowJar.configurations = [project.configurations.shade]
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT'
+    shade "org.jetbrains.kotlin:kotlin-stdlib:1.1.1"
+    kapt "com.redrield:spigot-yaml-generator:1.0"
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+task sendToServer(type: Copy) {
+    from("build/libs/KInventories-1.0-SNAPSHOT-all.jar")
+    into("/Users/Rhys/Desktop/Spigot/plugins")
+}
