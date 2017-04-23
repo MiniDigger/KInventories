@@ -1,5 +1,6 @@
 package com.redrield.kinventories
 
+import com.redrield.yamlgenerator.PluginMeta
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -14,6 +15,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.java.JavaPlugin
 
+@PluginMeta(name = "KInventoriesTest", version = "1.0")
 class KInventories : JavaPlugin(), Listener {
 
     override fun onEnable() {
