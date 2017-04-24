@@ -12,7 +12,7 @@ class ItemStackBuilder(material: Material, amount: Int) {
     val inner = ItemStack(material, amount)
 
     fun withMeta(block: Consumer<ItemMeta>): ItemStackBuilder {
-        this.inner.itemMeta { block::accept }
+        this.inner.itemMeta(block::accept)
         return this
     }
 
