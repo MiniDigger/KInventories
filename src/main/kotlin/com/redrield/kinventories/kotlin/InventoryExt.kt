@@ -7,6 +7,13 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
+/**
+ * Function to create an Inventory
+ * @param name Name of the inventory
+ * @param size Size of the inventory. Must be a multiple of 9
+ * @param block The block to be applied to the Inventory
+ * @return The created inventory
+ */
 @JvmSynthetic
 fun inventory(name: String, size: Int, block: Inventory.() -> Unit): Inventory {
     val inv = Bukkit.createInventory(null, size, name).apply(block)
@@ -14,16 +21,31 @@ fun inventory(name: String, size: Int, block: Inventory.() -> Unit): Inventory {
     return inv
 }
 
+/**
+ * Function to add an [org.bukkit.event.inventory.InventoryOpenEvent] callback to an inventory
+ * @param block The callback to be executed when the event is called
+ */
 @JvmSynthetic
 fun Inventory.onOpen(block: (Player) -> Unit) {
     KInventories.INVENTORY_OPEN_ACTIONS.put(this, block)
 }
 
+/**
+ * Function to add an [org.bukkit.event.inventory.InventoryCloseEvent] callback to an inventory
+ * @param block The callback to be executed when the event is called
+ */
 @JvmSynthetic
 fun Inventory.onClose(block: (Player) -> Unit) {
     KInventories.INVENTORY_CLOSE_ACTIONS.put(this, block)
 }
 
+/**
+ * Function to add an [ItemStack] to the inventory
+ * @param material The [org.bukkit.Material] of the [ItemStack]
+ * @param amount The amount of items in the [ItemStack]. Defaults to 1
+ * @param block The block to be applied to the [ItemStack]
+ * @return The [ItemStack]
+ */
 @JvmSynthetic
 inline fun Inventory.itemStack(material: Material, amount: Int = 1, block: ItemStack.() -> Unit): ItemStack {
     val stack = ItemStack(material, amount).apply(block)
@@ -31,6 +53,14 @@ inline fun Inventory.itemStack(material: Material, amount: Int = 1, block: ItemS
     return stack
 }
 
+/**
+ * Function to add an [ItemStack] to the inventory at a specific slot
+ * @param material the [Material] of the [ItemStack]
+ * @param amount The amount of items in the [ItemStack]. Defaults to 1
+ * @param slot the slot to put the item in.
+ * @param block The block to apply to the [ItemStack]
+ * @return the [ItemStack]
+ */
 @JvmSynthetic
 inline fun Inventory.itemStack(material: Material, amount: Int = 1, slot: Int, block: ItemStack.() -> Unit): ItemStack {
     val stack = ItemStack(material, amount).apply(block)
