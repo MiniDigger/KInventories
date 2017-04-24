@@ -11,7 +11,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
-@PluginMeta(name = "KInventoriesTest", version = "1.0")
+@PluginMeta(name = "KInventories", version = "1.0")
 class KInventories : JavaPlugin() {
 
     companion object {

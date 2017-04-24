@@ -1,14 +1,14 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.1.1"
     id "com.github.johnrengelman.shadow" version "1.2.4"
+    id "com.jfrog.bintray" version "1.7.3"
 }
 
+apply plugin: "maven-publish"
+apply plugin: "maven"
 
 group = pluginGroup
 version = pluginVersion
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -52,4 +52,32 @@ processResources {
 task sendToServer(type: Copy) {
     from("build/libs/KInventories-1.0-SNAPSHOT-all.jar")
     into("/Users/Rhys/Desktop/Spigot/plugins")
+}
+
+bintray {
+    Properties prop = new Properties()
+    prop.load(project.rootProject.file("local.properties").newDataInputStream())
+    user = prop.getProperty("bintray.user")
+    key = prop.getProperty("bintray.apiKey")
+
+    publications = ["MyPublication"]
+
+    pkg {
+        repo = "maven"
+        name = "kinventories"
+        version {
+            name = version
+        }
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId "com.redrield"
+            artifactId "kinventories"
+            version "1.0"
+        }
+    }
 }
