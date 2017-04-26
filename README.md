@@ -1,7 +1,7 @@
-# KINventories
+# KInventories
 
 
-##Documentation
+## Documentation
 There aren't compiled javadocs as of yet, but the code does have comments to assist you.
 
 ## Basic usage (Kotlin)
