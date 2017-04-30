@@ -4,10 +4,6 @@ before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
-script:
-  - gradle assemble -x bintrayUpload
-  - gradle check -x bintrayUpload
-
 cache:
   directories:
     - $HOME/.gradle/caches

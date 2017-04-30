@@ -22,15 +22,18 @@ class InventoryBuilder private constructor(val inventory: Inventory) {
          * @param size The size of the inventory. Must be a multiple of 9
          * @return a new InventoryBuilder with the set name and size
          */
-        @JvmStatic fun create(name: String?, size: Int) = InventoryBuilder(Bukkit.createInventory(null, size, name))
+        @JvmStatic fun create(name: String, size: Int) = InventoryBuilder(Bukkit.createInventory(null, size, name))
+        @JvmStatic fun create(size: Int) = InventoryBuilder(Bukkit.createInventory(null, size))
     }
 
     /**
      * Function to add an item to the current builder
-     * @param material The material of the [org.bukkit.inventory.ItemStack]to be created
-     * @param amount The amount of items in the [org.bukkit.inventory.ItemStack] to be created
-     * @param block The callback to add data to the [org.bukkit.inventory.ItemStack]
+     * @param material The material of the [ItemStack](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemStack.html) to be created
+     * @param amount The amount of items in the [ItemStack](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemStack.html) to be created
+     * @param block The callback to add data to the [ItemStack](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemStack.html)
      * @return instance, for chaining
+     * @see java.util.function.Consumer
+     * @see org.bukkit.inventory.ItemStack
      */
     fun addItem(material: Material, amount: Int, block: Consumer<ItemStackBuilder>): InventoryBuilder {
         val item = ItemStackBuilder(material, amount)

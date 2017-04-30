@@ -8,15 +8,28 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 /**
- * Function to create an Inventory
+ * Function to create a named Inventory
  * @param name Name of the inventory
  * @param size Size of the inventory. Must be a multiple of 9
  * @param block The block to be applied to the Inventory
  * @return The created inventory
  */
 @JvmSynthetic
-fun inventory(name: String, size: Int, block: Inventory.() -> Unit): Inventory {
+inline fun inventory(name: String, size: Int, block: Inventory.() -> Unit): Inventory {
     val inv = Bukkit.createInventory(null, size, name).apply(block)
+    KInventories.REGISTERED_INVENTORIES.add(inv)
+    return inv
+}
+
+/**
+ * Function to create an unnamed Inventory
+ * @parma size Size of the Inventory. Must be a multiple of 9
+ * @param block The block to be applied to the Inventory
+ * @return the created Inventory
+ */
+@JvmSynthetic
+inline fun inventory(size: Int, block: Inventory.() -> Unit): Inventory {
+    val inv = Bukkit.createInventory(null, size).apply(block)
     KInventories.REGISTERED_INVENTORIES.add(inv)
     return inv
 }
