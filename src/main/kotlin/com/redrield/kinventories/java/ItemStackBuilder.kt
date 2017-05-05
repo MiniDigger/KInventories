@@ -6,6 +6,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
+import java.util.function.BiFunction
 import java.util.function.Consumer
 
 /**
@@ -15,7 +16,7 @@ class ItemStackBuilder internal constructor(material: Material, amount: Int) {
     /**
      * The internal [ItemStack] of this object
      */
-    val inner = ItemStack(material, amount)
+    var inner = ItemStack(material, amount)
 
     /**
      * Callback with ItemMeta to add meta properties to the internal [ItemStack]
@@ -33,7 +34,9 @@ class ItemStackBuilder internal constructor(material: Material, amount: Int) {
      * @return instance, for chaining
      */
     fun onClick(block: Consumer<Player>): ItemStackBuilder {
-        this.inner.onClick(block::accept)
+        this.inner.onClick {
+            block.accept(it)
+        }
         return this
     }
 

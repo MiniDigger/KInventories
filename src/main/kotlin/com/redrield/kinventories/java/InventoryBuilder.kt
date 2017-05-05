@@ -23,6 +23,7 @@ class InventoryBuilder private constructor(val inventory: Inventory) {
          * @return a new InventoryBuilder with the set name and size
          */
         @JvmStatic fun create(name: String, size: Int) = InventoryBuilder(Bukkit.createInventory(null, size, name))
+
         @JvmStatic fun create(size: Int) = InventoryBuilder(Bukkit.createInventory(null, size))
     }
 

@@ -23,7 +23,7 @@ inline fun inventory(name: String, size: Int, block: Inventory.() -> Unit): Inve
 
 /**
  * Function to create an unnamed Inventory
- * @parma size Size of the Inventory. Must be a multiple of 9
+ * @param size Size of the Inventory. Must be a multiple of 9
  * @param block The block to be applied to the Inventory
  * @return the created Inventory
  */
@@ -60,8 +60,9 @@ fun Inventory.onClose(block: (Player) -> Unit) {
  * @return The [ItemStack]
  */
 @JvmSynthetic
-inline fun Inventory.itemStack(material: Material, amount: Int = 1, block: ItemStack.() -> Unit): ItemStack {
+inline fun Inventory.itemStack(material: Material, amount: Int = 1, durability: Short? = null, block: ItemStack.() -> Unit): ItemStack {
     val stack = ItemStack(material, amount).apply(block)
+        stack.durability = durability ?: stack.durability
     this.addItem(stack)
     return stack
 }
@@ -75,8 +76,9 @@ inline fun Inventory.itemStack(material: Material, amount: Int = 1, block: ItemS
  * @return the [ItemStack]
  */
 @JvmSynthetic
-inline fun Inventory.itemStack(material: Material, amount: Int = 1, slot: Int, block: ItemStack.() -> Unit): ItemStack {
+inline fun Inventory.itemStack(material: Material, amount: Int = 1, durability: Short? = null, slot: Int, block: ItemStack.() -> Unit): ItemStack {
     val stack = ItemStack(material, amount).apply(block)
+    stack.durability = durability ?: stack.durability
     this.setItem(slot, stack)
     return stack
 }

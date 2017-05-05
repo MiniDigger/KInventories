@@ -1,6 +1,5 @@
 package com.redrield.kinventories
 
-import com.redrield.yamlgenerator.PluginMeta
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -11,29 +10,37 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
-@PluginMeta(name = "KInventories", version = "1.0")
-class KInventories : JavaPlugin() {
+class KInventories {
 
     companion object {
-        val REGISTERED_INVENTORIES= ArrayList<Inventory>()
-        val ITEMSTACK_ACTIONS = HashMap<ItemStack, (Player) -> Unit>()
+        val REGISTERED_INVENTORIES = ArrayList<Inventory>()
+        val ITEMSTACK_ACTIONS = HashMap<ItemStack, ItemStack.(Player) -> Unit>()
         val INVENTORY_OPEN_ACTIONS = HashMap<Inventory, (Player) -> Unit>()
-        val INVENTORY_CLOSE_ACTIONS= HashMap<Inventory, (Player) -> Unit>()
+        val INVENTORY_CLOSE_ACTIONS = HashMap<Inventory, (Player) -> Unit>()
+
+        /**
+         * Registers KInventories InventoryListener under the provided JavaPlugin
+         *
+         * @param plugin The plugin to register the listener under
+         */
+        @JvmStatic
+        fun register(plugin: JavaPlugin) {
+            plugin.server.pluginManager.registerEvents(InventoryListener(), plugin)
+        }
     }
 
-    override fun onEnable() {
-        server.pluginManager.registerEvents(InventoryListener(), this)
-    }
-
-    private inner class InventoryListener : Listener {
+    private class InventoryListener : Listener {
 
         @EventHandler
         fun onClick(e: InventoryClickEvent) {
             if (REGISTERED_INVENTORIES.contains(e.inventory) && e.whoClicked is Player) {
                 e.isCancelled = true
                 val clickedStack = e.currentItem
-                ITEMSTACK_ACTIONS[clickedStack]?.let {
-                    it(e.whoClicked as Player)
+                ITEMSTACK_ACTIONS.forEach { k, _ -> println(k.type) }
+                val cb = ITEMSTACK_ACTIONS.remove(clickedStack)
+                if(cb != null) {
+                    clickedStack.cb(e.whoClicked as Player)
+                    ITEMSTACK_ACTIONS.put(clickedStack, cb)
                 }
             }
         }

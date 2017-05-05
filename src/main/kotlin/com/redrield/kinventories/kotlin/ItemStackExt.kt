@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta
  * @param callback The block to be called in the event
  */
 @JvmSynthetic
-fun ItemStack.onClick(callback: (Player) -> Unit) = KInventories.ITEMSTACK_ACTIONS.put(this, callback)
+fun ItemStack.onClick(callback: ItemStack.(Player) -> Unit) = KInventories.ITEMSTACK_ACTIONS.put(this, callback)
 
 /**
  * Function to add ItemMeta to an [ItemStack]
