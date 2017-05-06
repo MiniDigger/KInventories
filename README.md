@@ -1,3 +1,5 @@
+[ ![Download](https://api.bintray.com/packages/redrield/maven/kinventories/images/download.svg) ](https://bintray.com/redrield/maven/kinventories/_latestVersion)
+
 # KInventories
 
 
