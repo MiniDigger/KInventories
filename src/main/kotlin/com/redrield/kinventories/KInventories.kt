@@ -36,9 +36,7 @@ class KInventories {
             if (REGISTERED_INVENTORIES.contains(e.inventory) && e.whoClicked is Player) {
                 e.isCancelled = true
                 val clickedStack = e.currentItem
-                ITEMSTACK_ACTIONS.forEach { k, _ -> println(k.type) }
-                val cb = ITEMSTACK_ACTIONS.remove(clickedStack)
-                if(cb != null) {
+                ITEMSTACK_ACTIONS.remove(clickedStack)?.let { cb ->
                     clickedStack.cb(e.whoClicked as Player)
                     ITEMSTACK_ACTIONS.put(clickedStack, cb)
                 }
