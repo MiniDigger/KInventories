@@ -67,6 +67,13 @@ inline fun Inventory.itemStack(material: Material, amount: Int = 1, durability: 
     return stack
 }
 
+@JvmSynthetic
+inline fun Inventory.itemStack(stack: ItemStack, block: ItemStack.() -> Unit): ItemStack {
+    stack.apply(block)
+    this.addItem(stack)
+    return stack
+}
+
 /**
  * Function to add an [ItemStack] to the inventory at a specific slot
  * @param material the [Material] of the [ItemStack]
@@ -79,6 +86,13 @@ inline fun Inventory.itemStack(material: Material, amount: Int = 1, durability: 
 inline fun Inventory.itemStack(material: Material, amount: Int = 1, durability: Short? = null, slot: Int, block: ItemStack.() -> Unit): ItemStack {
     val stack = ItemStack(material, amount).apply(block)
     stack.durability = durability ?: stack.durability
+    this.setItem(slot, stack)
+    return stack
+}
+
+@JvmSynthetic
+inline fun Inventory.itemStack(stack: ItemStack, slot: Int, block: ItemStack.() -> Unit): ItemStack {
+    stack.apply(block)
     this.setItem(slot, stack)
     return stack
 }
