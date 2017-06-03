@@ -36,7 +36,7 @@ inventory(9) {
 This would create an inventory with an item named "Hello World!". The final thing that you'll need to know is how to register callbacks. KInventories provides you with 3 possible callbacks to register: Item click callbacks (`onClick { }`), inventory open callbacks (`onOpen { }`), and inventory close callbacks (`onClose { }`).
 All available methods will be available and documented ASAP
 
-##Getting started (Java)
+## Getting started (Java)
 The Java portion of the API is significantly less graceful than the Kotlin portion, because of limitations in what I can do with the language. Declaring an inventory in Java looks like this
 ```java
 InventoryBuilder.create(9).build();
